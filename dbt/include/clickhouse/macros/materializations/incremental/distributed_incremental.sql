@@ -31,7 +31,7 @@
   {%- set on_schema_change = incremental_validate_on_schema_change(config.get('on_schema_change'), default='ignore') -%}
 
 
-  {{ create_schema(target_relation_local) }}
+  -- { { create_schema(target_relation_local) }} -- //\\ zsn ANALYTICS-5836
   {%- set intermediate_relation = make_intermediate_relation(target_relation_local)-%}
   {%- set distributed_intermediate_relation = make_intermediate_relation(target_relation)-%}
   {%- set backup_relation_type = 'table' if existing_relation is none else existing_relation.type -%}
