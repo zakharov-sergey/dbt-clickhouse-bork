@@ -105,7 +105,7 @@
   {%- endif -%}
   {%- set col_list = [] -%}
   {% for col in columns %}
-    {{col_list.append(adapter.quote(col.name) + ' ' + col.data_type) or '' }}
+    {{col_list.append(adapter.quote(col.name) + ' ' + col.data_type) or '' }} -- //\\ zsn ANALYTICS-4964
   {% endfor %}
   {{ sql_header if sql_header is not none }}
 
@@ -134,7 +134,7 @@
 {% macro create_distributed_local_table(distributed_relation, shard_relation, structure_relation, sql_query=none) -%}
   {{ drop_relation_if_exists(shard_relation) }}
   {{ drop_relation_if_exists(distributed_relation) }}
-  {{ create_schema(shard_relation) }}
+  -- { { create_schema(shard_relation) }} -- //\\ zsn ANALYTICS-5836
   {% do run_query(create_empty_table_from_relation(shard_relation, structure_relation, sql_query)) or '' %}
   {% do run_query(create_distributed_table(distributed_relation, shard_relation)) or '' %}
   {% if sql_query is not none %}
